@@ -5,12 +5,8 @@
 #include "macros.h"
 #include "setup.h"
 
-/*void initGame(char** map, int pmapSize[], char* argv[], int argc)
-{
-    
-}*/
 
-char** setupMap(char**map, int nR, int nC, int pR, int pC, int** Xs)
+char** setupMap(char**map, int nR, int nC, int pR, int pC, int** Xs, int gR, int gC)
 {
     int i,j;
     system("clear");
@@ -47,14 +43,16 @@ char** setupMap(char**map, int nR, int nC, int pR, int pC, int** Xs)
         }
     }
 
+    map[gR][gC] = 'G';
+    map[pR][pC] = 'P';
+
     for(i=0;i<(nR*nC);i++)
     {
-        if((Xs[i][0] != 0) && Xs[i][1] == 0)
+        if((Xs[i][0] != 0) && (Xs[i][1] != 0))
         {
             map[Xs[i][0]][Xs[i][1]] = 'X';
         }
     }
 
-    map[pR][pC] = 'P';
     return map;
 }

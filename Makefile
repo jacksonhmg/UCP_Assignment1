@@ -11,7 +11,7 @@ endif
 $(EXEC) : $(OBJ)
 	$(CC) $(OBJ) -o $(EXEC)
 
-main.o : main.c setup.h macros.h gameloop.h terminal.h random.h
+main.o : main.c setup.h macros.h gameloop.h terminal.h random.h checkers.h
 	$(CC) $(CFLAGS) -c main.c
 
 setup.o : setup.c setup.h macros.h
