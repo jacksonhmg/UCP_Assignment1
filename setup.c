@@ -10,30 +10,30 @@
     
 }*/
 
-char** setupMap(char**map, int nR, int nC, int pR, int pC)
+char** setupMap(char**map, int nR, int nC, int pR, int pC, int** Xs)
 {
     int i,j;
     system("clear");
-    map = (char**)malloc(nR*sizeof(char*));
+    map = (char**)calloc(nR,sizeof(char*));
     for(i=0;i<nR;i++)
     {
-        map[i] = (char*)malloc(nC * sizeof(char));
+        map[i] = (char*)calloc(nC, sizeof(char));
     }
     for(i=0;i<nR;i++)
     {
-        map[i][nC-1] = 'X';
+        map[i][nC-1] = '*';
     }
     for(i=0;i<nR;i++)
     {
-        map[i][0] = 'X';
+        map[i][0] = '*';
     }
     for(i=0;i<nC;i++)
     {
-        map[0][i] = 'X';
+        map[0][i] = '*';
     }
     for(i=0;i<nC;i++)
     {
-        map[nR-1][i] = 'X';
+        map[nR-1][i] = '*';
     }
     
     for(i=0;i<nR;i++)
@@ -44,6 +44,14 @@ char** setupMap(char**map, int nR, int nC, int pR, int pC)
             {
                 map[i][j] =  ' ';
             }
+        }
+    }
+
+    for(i=0;i<(nR*nC);i++)
+    {
+        if((Xs[i][0] != 0) && Xs[i][1] == 0)
+        {
+            map[Xs[i][0]][Xs[i][1]] = 'X';
         }
     }
 
