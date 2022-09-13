@@ -40,6 +40,11 @@ int main(int argc, char* argv[])
     printMap(map,nR,nC);
     while(!winCond(pR,pC,gR,gC) && !loseCond(pR,pC,gR,gC,Xs,nR,nC))
     {
+        for(i = 0; i < nR; i++)
+        {
+            free(map[i]);
+        }
+        free(map);
         playerInput(&pR,&pC,nR,nC,Xs);
         xUpdate(Xs,nR,nC,pR,pC, gR, gC);
         map = setupMap(map, nR, nC, pR, pC, Xs, gR, gC);
@@ -55,7 +60,15 @@ int main(int argc, char* argv[])
         printf("You Lose!\n");
         printf("Unlucky!\n");
     }
+    for(i = 0; i < nR; i++)
+    {
+        free(map[i]);
+    }
     free(map);
+    for(i = 0; i < (nR*nC); i++)
+    {
+        free(Xs[i]);
+    }
     free(Xs);
     return 0;
     

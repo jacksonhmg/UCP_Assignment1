@@ -53,6 +53,6 @@ char** setupMap(char**map, int nR, int nC, int pR, int pC, int** Xs, int gR, int
             map[Xs[i][0]][Xs[i][1]] = 'X';
         }
     }
-
+    
     return map;
 }
