@@ -72,9 +72,6 @@ int main(int argc, char* argv[])
         xUpdate(Xs,nR,nC,pR,pC, gR, gC);
         map = setupMap(map, nR, nC, pR, pC, Xs, gR, gC);
         printMap(map,nR,nC);
-        #ifdef DEBUG
-        printf("YOOOOO\n");
-        #endif
     }
     if(winCond(pR,pC,gR,gC))
     {

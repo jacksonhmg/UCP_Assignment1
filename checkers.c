@@ -4,14 +4,18 @@
 
 #include "checkers.h"
 
-int validatePW(int nR, int nC, int pR, int pC, char input)
+int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs)
 {
     if(input == 'a')
     {
         if(pC-1 == 0)
         {
             #ifdef BORDERLESS
-                return 1;
+                if(validatePX(Xs,nR,nC,pR,nC-1,input))
+                {
+                    return 1;
+                }
+                
             #endif
 
             return 0;
@@ -21,6 +25,10 @@ int validatePW(int nR, int nC, int pR, int pC, char input)
     {
         if(pC+1 == nC-1)
         {
+            #ifdef BORDERLESS
+                return 1;
+            #endif
+
             return 0;
         }
     }
@@ -28,6 +36,10 @@ int validatePW(int nR, int nC, int pR, int pC, char input)
     {
         if(pR+1 == nR-1)
         {
+            #ifdef BORDERLESS
+                return 1;
+            #endif
+
             return 0;
         }
     }
@@ -35,6 +47,9 @@ int validatePW(int nR, int nC, int pR, int pC, char input)
     {
         if(pR-1 == 0)
         {
+            #ifdef BORDERLESS
+                return 1;
+            #endif
             return 0;
         }
     }
@@ -98,10 +113,10 @@ int loseCond(int pR, int pC, int gR, int gC, int nR, int nC,char** map, int** Xs
     int check = 0;
 
     /*checking if possible to move at all*/
-    if(!(validatePW(nR, nC, pR, pC, 'w') && validatePX(Xs,nR,nC,pR,pC,'w')) &&
-    !(validatePW(nR, nC, pR, pC, 'a') && validatePX(Xs,nR,nC,pR,pC,'a')) &&
-    !(validatePW(nR, nC, pR, pC, 's') && validatePX(Xs,nR,nC,pR,pC,'s')) && 
-    !(validatePW(nR, nC, pR, pC, 'd') && validatePX(Xs,nR,nC,pR,pC,'d')))
+    if(!(validatePW(nR, nC, pR, pC, 'w',Xs) && validatePX(Xs,nR,nC,pR,pC,'w')) &&
+    !(validatePW(nR, nC, pR, pC, 'a',Xs) && validatePX(Xs,nR,nC,pR,pC,'a')) &&
+    !(validatePW(nR, nC, pR, pC, 's',Xs) && validatePX(Xs,nR,nC,pR,pC,'s')) && 
+    !(validatePW(nR, nC, pR, pC, 'd',Xs) && validatePX(Xs,nR,nC,pR,pC,'d')))
     {
         check = 1;
     }

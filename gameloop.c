@@ -30,7 +30,7 @@ void playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
     enableBuffer();
     if(input == 'a')
     {
-        check = validatePW(nR, nC, *pR, *pC, input) && validatePX(Xs,nR,nC,*pR,*pC,input);
+        check = validatePW(nR, nC, *pR, *pC, input,Xs) && validatePX(Xs,nR,nC,*pR,*pC,input);
         if(check){
             #ifdef BORDERLESS
                 if((*pC-1) == 0)
@@ -38,31 +38,49 @@ void playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
                     (*pC) = nC-1;
                 }
             #endif
-            if(!((*pC)-1 == 0))
-            {
-                (*pC)--;
-            }
+            (*pC)--;
             
         }
     }
     if(input == 'd')
     {
-        check = validatePW(nR, nC, *pR, *pC, input) && validatePX(Xs,nR,nC,*pR,*pC,input);
+        check = validatePW(nR, nC, *pR, *pC, input,Xs) && validatePX(Xs,nR,nC,*pR,*pC,input);
         if(check){
-            (*pC)++;
+            #ifdef BORDERLESS
+                if((*pC+1) == nC-1 && validatePX(Xs,nR,nC,*pR,0,input))
+                {
+                    (*pC) = 0;
+                }
+            #endif
+            if(!((*pC)+1 == nC-1))
+            {
+                (*pC)++;
+            }
         }    
     }
     if(input == 's')
     {
-        check = validatePW(nR, nC, *pR, *pC, input) && validatePX(Xs,nR,nC,*pR,*pC,input);
+        check = validatePW(nR, nC, *pR, *pC, input,Xs) && validatePX(Xs,nR,nC,*pR,*pC,input);
         if(check){
+            #ifdef BORDERLESS
+                if((*pR+1) == nR-1)
+                {
+                    (*pR) = 0;
+                }
+            #endif
             (*pR)++;
         }  
     }
     if(input == 'w')
     {
-        check = validatePW(nR, nC, *pR, *pC, input) && validatePX(Xs,nR,nC,*pR,*pC,input);
+        check = validatePW(nR, nC, *pR, *pC, input,Xs) && validatePX(Xs,nR,nC,*pR,*pC,input);
         if(check){
+            #ifdef BORDERLESS
+                if((*pR-1) == 0)
+                {
+                    (*pR) = nR-1;
+                }
+            #endif
             (*pR)--;
         }
     }
