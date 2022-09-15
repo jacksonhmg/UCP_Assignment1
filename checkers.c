@@ -10,6 +10,10 @@ int validatePW(int nR, int nC, int pR, int pC, char input)
     {
         if(pC-1 == 0)
         {
+            #ifdef BORDERLESS
+                return 1;
+            #endif
+
             return 0;
         }
     }
@@ -88,55 +92,25 @@ int winCond(int pR, int pC, int gR, int gC)
     return (pR == gR && pC == gC) ? 1 : 0;
 }
 
-int loseCond(int pR, int pC, int gR, int gC, int** Xs, int nR, int nC)
+
+int loseCond(int pR, int pC, int gR, int gC, int nR, int nC,char** map, int** Xs)
 {
-    int check, pCounter, gCounter, i;
-    check = 0;
-    pCounter = 0;
-    gCounter = 0;
-    for(i=0;i<(nR*nC);i++)
-    {
-        if((Xs[i][0] == pR-1) && (Xs[i][1] == pC))
-        {
-            pCounter++;
-        }
-        if((Xs[i][0] == pR+1) && (Xs[i][1] == pC))
-        {
-            pCounter++;
-        }
-        if((Xs[i][0] == pR) && (Xs[i][1] == pC-1))
-        {
-            pCounter++;
-        }
-        if((Xs[i][0] == pR) && (Xs[i][1] == pC+1))
-        {
-            pCounter++;
-        }
-    }
-    if(pCounter == 4)
+    int check = 0;
+
+    /*checking if possible to move at all*/
+    if(!(validatePW(nR, nC, pR, pC, 'w') && validatePX(Xs,nR,nC,pR,pC,'w')) &&
+    !(validatePW(nR, nC, pR, pC, 'a') && validatePX(Xs,nR,nC,pR,pC,'a')) &&
+    !(validatePW(nR, nC, pR, pC, 's') && validatePX(Xs,nR,nC,pR,pC,'s')) && 
+    !(validatePW(nR, nC, pR, pC, 'd') && validatePX(Xs,nR,nC,pR,pC,'d')))
     {
         check = 1;
     }
-    for(i=0;i<(nR*nC);i++)
-    {
-        if((Xs[i][0] == gR-1) && (Xs[i][1] == gC))
-        {
-            gCounter++;
-        }
-        if((Xs[i][0] == gR+1) && (Xs[i][1] == gC))
-        {
-            gCounter++;
-        }
-        if((Xs[i][0] == gR) && (Xs[i][1] == gC-1))
-        {
-            gCounter++;
-        }
-        if((Xs[i][0] == gR) && (Xs[i][1] == gC+1))
-        {
-            gCounter++;
-        }
-    }
-    if(gCounter == 4)
+
+    /*  checking goal is surrounded by Xs or *'s  */
+    if((map[gR-1][gC] == 'X' || map[gR-1][gC] == '*') && 
+    (map[gR+1][gC] == '*' || map[gR+1][gC] == 'X') && 
+    (map[gR][gC-1] == '*' || map[gR][gC-1] == 'X') && 
+    (map[gR][gC+1] == '*' || map[gR][gC+1] == 'X'))
     {
         check = 1;
     }

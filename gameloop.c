@@ -32,7 +32,17 @@ void playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
     {
         check = validatePW(nR, nC, *pR, *pC, input) && validatePX(Xs,nR,nC,*pR,*pC,input);
         if(check){
-            (*pC)--;
+            #ifdef BORDERLESS
+                if((*pC-1) == 0)
+                {
+                    (*pC) = nC-1;
+                }
+            #endif
+            if(!((*pC)-1 == 0))
+            {
+                (*pC)--;
+            }
+            
         }
     }
     if(input == 'd')
@@ -94,5 +104,5 @@ int xUpdate(int** Xs, int nR, int nC,int pR, int pC, int gR, int gC)
             }
         }
     }while(!check);
-    
+    return 0;
 }

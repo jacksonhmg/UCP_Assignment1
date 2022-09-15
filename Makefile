@@ -1,10 +1,10 @@
 CC = gcc -g
 CFLAGS = -Wall -pedantic -ansi
-OBJ = main.o setup.o gameloop.c terminal.o checkers.o random.o
+OBJ = main.o setup.o gameloop.o terminal.o checkers.o random.o
 EXEC = prog
 
-ifdef DEBUG
-CFLAGS += -D DEBUG
+ifdef BORDERLESS
+CFLAGS += -D BORDERLESS
 DEBUG : clean $(EXEC)
 endif
 
