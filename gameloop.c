@@ -47,15 +47,12 @@ void playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
         check = validatePW(nR, nC, *pR, *pC, input,Xs) && validatePX(Xs,nR,nC,*pR,*pC,input);
         if(check){
             #ifdef BORDERLESS
-                if((*pC+1) == nC-1 && validatePX(Xs,nR,nC,*pR,0,input))
+                if((*pC+1) == nC-1)
                 {
                     (*pC) = 0;
                 }
             #endif
-            if(!((*pC)+1 == nC-1))
-            {
-                (*pC)++;
-            }
+            (*pC)++;
         }    
     }
     if(input == 's')

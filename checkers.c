@@ -15,7 +15,6 @@ int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs)
                 {
                     return 1;
                 }
-                
             #endif
 
             return 0;
@@ -26,7 +25,10 @@ int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs)
         if(pC+1 == nC-1)
         {
             #ifdef BORDERLESS
-                return 1;
+                if(validatePX(Xs,nR,nC,pR,0,input))
+                {
+                    return 1;
+                }
             #endif
 
             return 0;
@@ -37,7 +39,10 @@ int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs)
         if(pR+1 == nR-1)
         {
             #ifdef BORDERLESS
-                return 1;
+                if(validatePX(Xs,nR,nC,0,pC,input))
+                {
+                    return 1;
+                }
             #endif
 
             return 0;
@@ -48,7 +53,10 @@ int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs)
         if(pR-1 == 0)
         {
             #ifdef BORDERLESS
-                return 1;
+                if(validatePX(Xs,nR,nC,nR-1,pC,input))
+                {
+                    return 1;
+                }
             #endif
             return 0;
         }
