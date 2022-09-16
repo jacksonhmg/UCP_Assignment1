@@ -1,7 +1,7 @@
 CC = gcc -g
 CFLAGS = -Wall -pedantic -ansi
 OBJ = main.o setup.o gameloop.o terminal.o checkers.o random.o
-EXEC = prog
+EXEC = escape
 
 ifdef BORDERLESS
 CFLAGS += -D BORDERLESS

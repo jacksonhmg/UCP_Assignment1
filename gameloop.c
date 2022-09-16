@@ -21,10 +21,11 @@ void printMap(char** map, int nR, int nC)
     }
 }
 
-void playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
+int playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
 {
     char input;
-    int check;
+    int check, valid;
+    valid = 0;
     disableBuffer();
     scanf(" %c",&input);
     enableBuffer();
@@ -39,7 +40,7 @@ void playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
                 }
             #endif
             (*pC)--;
-            
+            valid = 1;
         }
     }
     if(input == 'd')
@@ -53,6 +54,7 @@ void playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
                 }
             #endif
             (*pC)++;
+            valid = 1;
         }    
     }
     if(input == 's')
@@ -66,6 +68,7 @@ void playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
                 }
             #endif
             (*pR)++;
+            valid = 1;
         }  
     }
     if(input == 'w')
@@ -79,8 +82,10 @@ void playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
                 }
             #endif
             (*pR)--;
+            valid = 1;
         }
     }
+    return valid;
 }
 
 int xUpdate(int** Xs, int nR, int nC,int pR, int pC, int gR, int gC)
@@ -120,4 +125,12 @@ int xUpdate(int** Xs, int nR, int nC,int pR, int pC, int gR, int gC)
         }
     }while(!check);
     return 0;
+}
+
+void optionsPrint()
+{
+    printf("Press w to go up\n");
+    printf("Press s to go down\n");
+    printf("Press a to go left\n");
+    printf("Press d to go right\n");
 }

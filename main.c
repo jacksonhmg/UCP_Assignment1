@@ -13,7 +13,7 @@ int main(int argc, char* argv[])
 {
     char** map;
     
-    int nR,nC,pR,pC,gR,gC,i;
+    int nR,nC,pR,pC,gR,gC,i, valid;
     int** Xs;
     if(argc < 7)
     {
@@ -27,16 +27,28 @@ int main(int argc, char* argv[])
     gR = atoi(argv[5]) +1;
     gC = atoi(argv[6]) +1;
 
-    if(pR <= 0 || pR > nR - 2 || pC <= 0 || pC > nC - 2)
+    if(nR < 2 || nC < 2 || pR < 1 || pC < 1 || gR < 1 || gC < 1)
+    {
+        printf("Cannot enter negative numbers!\n");
+        return 0;
+    }
+
+    if(nR <= 7 || nC <= 7) /*7 because the inside can't be smaller than 5 and 7 is the number of whole array including border*/
+    {
+        printf("Map size too small!\n");
+        return 0;
+    }
+    if(pR > nR - 2 || pC > nC - 2)
     {
         printf("Player position placed outside of map area!\n");
         return 0;
     }
-    if(gR <= 0 || gR > nR - 2 || gC <= 0 || gC > nC - 2)
+    if(gR > nR - 2 || gC > nC - 2)
     {
         printf("Goal position placed outside of map area!\n");
         return 0;
     }
+    
     
 
     map = (char**)calloc(nR,sizeof(char*));
@@ -68,8 +80,12 @@ int main(int argc, char* argv[])
             free(map[i]);
         }
         free(map);
-        playerInput(&pR,&pC,nR,nC,Xs);
-        xUpdate(Xs,nR,nC,pR,pC, gR, gC);
+        optionsPrint();
+        valid = playerInput(&pR,&pC,nR,nC,Xs);
+        if(valid)
+        {
+            xUpdate(Xs,nR,nC,pR,pC, gR, gC);
+        }
         map = setupMap(map, nR, nC, pR, pC, Xs, gR, gC);
         printMap(map,nR,nC);
     }

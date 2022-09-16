@@ -6,74 +6,80 @@
 
 int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs)
 {
+    int valid;
+    valid = 1;
     if(input == 'a')
     {
         if(pC-1 == 0)
         {
+            valid = 0;
+
             #ifdef BORDERLESS
                 if(validatePX(Xs,nR,nC,pR,nC-1,input))
                 {
-                    return 1;
+                    valid = 1;
                 }
             #endif
-
-            return 0;
+            
         }
     }
     if(input == 'd')
     {
         if(pC+1 == nC-1)
         {
+            valid = 0;
+            
             #ifdef BORDERLESS
                 if(validatePX(Xs,nR,nC,pR,0,input))
                 {
-                    return 1;
+                    valid = 1;
                 }
             #endif
 
-            return 0;
         }
     }
     if(input == 's')
     {
         if(pR+1 == nR-1)
         {
+            valid = 0;
             #ifdef BORDERLESS
                 if(validatePX(Xs,nR,nC,0,pC,input))
                 {
-                    return 1;
+                    valid = 1;
                 }
             #endif
 
-            return 0;
+           
         }
     }
     if(input == 'w')
     {
         if(pR-1 == 0)
         {
+            valid = 0;
             #ifdef BORDERLESS
                 if(validatePX(Xs,nR,nC,nR-1,pC,input))
                 {
-                    return 1;
+                    valid = 1;
                 }
             #endif
-            return 0;
         }
     }
-    return 1;
+    return valid;
 }
 
 int validatePX(int** Xs, int nR, int nC, int pR, int pC, char input)
 {
-    int i;
+    int i, valid;
+    valid = 1;
     if(input == 'a')
     {
         for(i=0;i<(nR*nC);i++)
         {
             if((Xs[i][0] == (pR)) && (Xs[i][1] == (pC-1)))
             {
-                return 0;
+                valid = 0;
             }
         }
     }
@@ -83,7 +89,7 @@ int validatePX(int** Xs, int nR, int nC, int pR, int pC, char input)
         {
             if((Xs[i][0] == (pR)) && (Xs[i][1] == (pC+1)))
             {
-                return 0;
+                valid = 0;
             }
         }
     }
@@ -93,7 +99,7 @@ int validatePX(int** Xs, int nR, int nC, int pR, int pC, char input)
         {
             if((Xs[i][0] == (pR+1)) && (Xs[i][1] == (pC)))
             {
-                return 0;
+                valid = 0;
             }
         }
     }
@@ -103,11 +109,11 @@ int validatePX(int** Xs, int nR, int nC, int pR, int pC, char input)
         {
             if((Xs[i][0] == (pR-1)) && (Xs[i][1] == (pC)))
             {
-                return 0;
+                valid = 0;
             }
         }
     }
-    return 1;
+    return valid;
 }
 
 int winCond(int pR, int pC, int gR, int gC)
