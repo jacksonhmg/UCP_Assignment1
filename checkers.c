@@ -4,7 +4,7 @@
 
 #include "checkers.h"
 
-int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs)
+int validatePW(int nR, int nC, int pR, int pC, char input, char** map)
 {
     int valid;
     valid = 1;
@@ -15,7 +15,7 @@ int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs)
             valid = 0;
 
             #ifdef BORDERLESS
-                if(validatePX(Xs,nR,nC,pR,nC-1,input))
+                if(validatePX(map,nR,nC,pR,nC-1,input))
                 {
                     valid = 1;
                 }
@@ -30,7 +30,7 @@ int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs)
             valid = 0;
             
             #ifdef BORDERLESS
-                if(validatePX(Xs,nR,nC,pR,0,input))
+                if(validatePX(map,nR,nC,pR,0,input))
                 {
                     valid = 1;
                 }
@@ -44,7 +44,7 @@ int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs)
         {
             valid = 0;
             #ifdef BORDERLESS
-                if(validatePX(Xs,nR,nC,0,pC,input))
+                if(validatePX(map,nR,nC,0,pC,input))
                 {
                     valid = 1;
                 }
@@ -59,7 +59,7 @@ int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs)
         {
             valid = 0;
             #ifdef BORDERLESS
-                if(validatePX(Xs,nR,nC,nR-1,pC,input))
+                if(validatePX(map,nR,nC,nR-1,pC,input))
                 {
                     valid = 1;
                 }
@@ -69,48 +69,36 @@ int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs)
     return valid;
 }
 
-int validatePX(int** Xs, int nR, int nC, int pR, int pC, char input)
+int validatePX(char**map, int nR, int nC, int pR, int pC, char input)
 {
-    int i, valid;
+    int valid;
     valid = 1;
     if(input == 'a')
     {
-        for(i=0;i<(nR*nC);i++)
+        if(map[pR][pC-1] == 'X')
         {
-            if((Xs[i][0] == (pR)) && (Xs[i][1] == (pC-1)))
-            {
-                valid = 0;
-            }
+            valid = 0;
         }
     }
     if(input == 'd')
     {
-        for(i=0;i<(nR*nC);i++)
+        if(map[pR][pC+1] == 'X')
         {
-            if((Xs[i][0] == (pR)) && (Xs[i][1] == (pC+1)))
-            {
-                valid = 0;
-            }
+            valid = 0;
         }
     }
     if(input == 's')
     {
-        for(i=0;i<(nR*nC);i++)
+        if(map[pR+1][pC] == 'X')
         {
-            if((Xs[i][0] == (pR+1)) && (Xs[i][1] == (pC)))
-            {
-                valid = 0;
-            }
+            valid = 0;
         }
     }
     if(input == 'w')
     {
-        for(i=0;i<(nR*nC);i++)
+        if(map[pR-1][pC] == 'X')
         {
-            if((Xs[i][0] == (pR-1)) && (Xs[i][1] == (pC)))
-            {
-                valid = 0;
-            }
+            valid = 0;
         }
     }
     return valid;
@@ -122,15 +110,15 @@ int winCond(int pR, int pC, int gR, int gC)
 }
 
 
-int loseCond(int pR, int pC, int gR, int gC, int nR, int nC,char** map, int** Xs)
+int loseCond(int pR, int pC, int gR, int gC, int nR, int nC,char** map)
 {
     int check = 0;
 
     /*checking if possible to move at all*/
-    if(!(validatePW(nR, nC, pR, pC, 'w',Xs) && validatePX(Xs,nR,nC,pR,pC,'w')) &&
-    !(validatePW(nR, nC, pR, pC, 'a',Xs) && validatePX(Xs,nR,nC,pR,pC,'a')) &&
-    !(validatePW(nR, nC, pR, pC, 's',Xs) && validatePX(Xs,nR,nC,pR,pC,'s')) && 
-    !(validatePW(nR, nC, pR, pC, 'd',Xs) && validatePX(Xs,nR,nC,pR,pC,'d')))
+    if(!(validatePW(nR, nC, pR, pC, 'w',map) && validatePX(map,nR,nC,pR,pC,'w')) &&
+    !(validatePW(nR, nC, pR, pC, 'a',map) && validatePX(map,nR,nC,pR,pC,'a')) &&
+    !(validatePW(nR, nC, pR, pC, 's',map) && validatePX(map,nR,nC,pR,pC,'s')) && 
+    !(validatePW(nR, nC, pR, pC, 'd',map) && validatePX(map,nR,nC,pR,pC,'d')))
     {
         check = 1;
     }
@@ -142,6 +130,12 @@ int loseCond(int pR, int pC, int gR, int gC, int nR, int nC,char** map, int** Xs
     (map[gR][gC+1] == '*' || map[gR][gC+1] == 'X'))
     {
         check = 1;
+    }
+    if(check)
+    {
+        printf("\n");
+        printf("You Lose!\n");
+        printf("Unlucky!\n");
     }
     return check;
 }

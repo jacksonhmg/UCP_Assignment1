@@ -97,6 +97,6 @@ void setupMap2(char***map, int nR, int nC, int pR, int pC, int gR, int gC)
 
     (*map)[gR][gC] = 'G';
     (*map)[pR][pC] = 'P';
-    printMap(*map,nR,nC);
 }
+
 

@@ -11,6 +11,7 @@
 void printMap(char** map, int nR, int nC)
 {
     int i,j;
+    system("clear");
     for(i=0;i<nR;i++)
     {
         for(j=0;j<nC;j++)
@@ -21,7 +22,7 @@ void printMap(char** map, int nR, int nC)
     }
 }
 
-int playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
+int playerInput(int* pR, int* pC, int nR, int nC, char** map)
 {
     char input;
     int check, valid;
@@ -31,7 +32,7 @@ int playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
     enableBuffer();
     if(input == 'a')
     {
-        check = validatePW(nR, nC, *pR, *pC, input,Xs) && validatePX(Xs,nR,nC,*pR,*pC,input);
+        check = validatePW(nR, nC, *pR, *pC, input,map) && validatePX(map,nR,nC,*pR,*pC,input);
         if(check){
             #ifdef BORDERLESS
                 if((*pC-1) == 0)
@@ -45,7 +46,7 @@ int playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
     }
     if(input == 'd')
     {
-        check = validatePW(nR, nC, *pR, *pC, input,Xs) && validatePX(Xs,nR,nC,*pR,*pC,input);
+        check = validatePW(nR, nC, *pR, *pC, input,map) && validatePX(map,nR,nC,*pR,*pC,input);
         if(check){
             #ifdef BORDERLESS
                 if((*pC+1) == nC-1)
@@ -59,7 +60,7 @@ int playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
     }
     if(input == 's')
     {
-        check = validatePW(nR, nC, *pR, *pC, input,Xs) && validatePX(Xs,nR,nC,*pR,*pC,input);
+        check = validatePW(nR, nC, *pR, *pC, input,map) && validatePX(map,nR,nC,*pR,*pC,input);
         if(check){
             #ifdef BORDERLESS
                 if((*pR+1) == nR-1)
@@ -73,7 +74,7 @@ int playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
     }
     if(input == 'w')
     {
-        check = validatePW(nR, nC, *pR, *pC, input,Xs) && validatePX(Xs,nR,nC,*pR,*pC,input);
+        check = validatePW(nR, nC, *pR, *pC, input,map) && validatePX(map,nR,nC,*pR,*pC,input);
         if(check){
             #ifdef BORDERLESS
                 if((*pR-1) == 0)
@@ -88,43 +89,18 @@ int playerInput(int* pR, int* pC, int nR, int nC, int** Xs)
     return valid;
 }
 
-int xUpdate(int** Xs, int nR, int nC,int pR, int pC, int gR, int gC)
+void xUpdate(char** map, int nR, int nC)
 {
-    int xR, xC,i,check;
-    do
+    int xR, xC;
+    xR = randoms(1,nR-2);
+    xC = randoms(1,nC-2);
+
+    while(map[xR][xC] != ' ')
     {
-        check = 1;
         xR = randoms(1,nR-2);
         xC = randoms(1,nC-2);
-        for(i=0;i<(nR*nC);i++)
-        {
-            if((Xs[i][0] == xR) && (Xs[i][1] == xC))
-            {
-                check = 0;
-            }
-        }
-        if((xR == pR) && (xC == pC))
-        {
-            check = 0;
-        }
-        if((xR == gR) && (xC == gC))
-        {
-            check = 0;
-        }
-        if(check)
-        {
-            for(i=0;i<(nR*nC);i++)
-            {
-                if((Xs[i][0] == 0) && (Xs[i][1] == 0))
-                {
-                    Xs[i][0] = xR;
-                    Xs[i][1] = xC;
-                    return 1;
-                }
-            }
-        }
-    }while(!check);
-    return 0;
+    }
+    map[xR][xC] = 'X';
 }
 
 void optionsPrint()
