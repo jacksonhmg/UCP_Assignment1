@@ -4,10 +4,10 @@
 
 #include "checkers.h"
 
-int validatePW(int nR, int nC, int pR, int pC, char input, char** map)
+int validatePW(int nR, int nC, int pR, int pC, char input, char** map) /*validating against the walls*/
 {
     int valid;
-    valid = 1;
+    valid = 1; /*valid unless told otherwise*/
     if(input == 'a')
     {
         if(pC-1 == 0)
@@ -15,7 +15,7 @@ int validatePW(int nR, int nC, int pR, int pC, char input, char** map)
             valid = 0;
 
             #ifdef BORDERLESS
-                if(validatePX(map,nR,nC,pR,nC-1,input))
+                if(validatePX(map,nR,nC,pR,nC-1,input)) /*if there's no Xs on other side blocking the borderless wrap around*/
                 {
                     valid = 1;
                 }
@@ -30,7 +30,7 @@ int validatePW(int nR, int nC, int pR, int pC, char input, char** map)
             valid = 0;
             
             #ifdef BORDERLESS
-                if(validatePX(map,nR,nC,pR,0,input))
+                if(validatePX(map,nR,nC,pR,0,input)) /*if there's no Xs on other side blocking the borderless wrap around*/
                 {
                     valid = 1;
                 }
@@ -44,7 +44,7 @@ int validatePW(int nR, int nC, int pR, int pC, char input, char** map)
         {
             valid = 0;
             #ifdef BORDERLESS
-                if(validatePX(map,nR,nC,0,pC,input))
+                if(validatePX(map,nR,nC,0,pC,input)) /*if there's no Xs on other side blocking the borderless wrap around*/
                 {
                     valid = 1;
                 }
@@ -59,7 +59,7 @@ int validatePW(int nR, int nC, int pR, int pC, char input, char** map)
         {
             valid = 0;
             #ifdef BORDERLESS
-                if(validatePX(map,nR,nC,nR-1,pC,input))
+                if(validatePX(map,nR,nC,nR-1,pC,input)) /*if there's no Xs on other side blocking the borderless wrap around*/
                 {
                     valid = 1;
                 }
@@ -69,7 +69,7 @@ int validatePW(int nR, int nC, int pR, int pC, char input, char** map)
     return valid;
 }
 
-int validatePX(char**map, int nR, int nC, int pR, int pC, char input)
+int validatePX(char**map, int nR, int nC, int pR, int pC, char input) /*validating against the Xs*/
 {
     int valid;
     valid = 1;
@@ -114,7 +114,7 @@ int loseCond(int pR, int pC, int gR, int gC, int nR, int nC,char** map)
 {
     int check = 0;
 
-    /*checking if possible to move at all*/
+    /*checking if possible to move at all, if not possible to move then check = 1 and therefore lose*/
     if(!(validatePW(nR, nC, pR, pC, 'w',map) && validatePX(map,nR,nC,pR,pC,'w')) &&
     !(validatePW(nR, nC, pR, pC, 'a',map) && validatePX(map,nR,nC,pR,pC,'a')) &&
     !(validatePW(nR, nC, pR, pC, 's',map) && validatePX(map,nR,nC,pR,pC,'s')) && 
@@ -123,7 +123,7 @@ int loseCond(int pR, int pC, int gR, int gC, int nR, int nC,char** map)
         check = 1;
     }
 
-    /*  checking goal is surrounded by Xs or *'s  */
+    /* checking if goal is surrounded by Xs or *'s or both */
     if((map[gR-1][gC] == 'X' || map[gR-1][gC] == '*') && 
     (map[gR+1][gC] == '*' || map[gR+1][gC] == 'X') && 
     (map[gR][gC-1] == '*' || map[gR][gC-1] == 'X') && 
@@ -140,7 +140,7 @@ int loseCond(int pR, int pC, int gR, int gC, int nR, int nC,char** map)
     return check;
 }
 
-int inputCheck(int *nR,int *nC,int *pR,int *pC,int *gR,int *gC, int argc, char* argv[])
+int inputCheck(int *nR,int *nC,int *pR,int *pC,int *gR,int *gC, int argc, char* argv[]) /*validating user input*/
 {
     int check;
     check = 1;
@@ -149,6 +149,9 @@ int inputCheck(int *nR,int *nC,int *pR,int *pC,int *gR,int *gC, int argc, char* 
         printf("Please run in the format of: './prog <row-size> <col-size> <player-row> <player-col> <goal-row> <goal-col>");
         check = 0;
     }
+
+    /* i add to all the inputs below so that, for example, "0,0" for player position equals the top left corner inside the box 
+    and that "15,15" equals the size inside the box not including border*/
     *nR = atoi(argv[1]) +2;
     *nC = atoi(argv[2]) +2;
     *pR = atoi(argv[3]) +1;
@@ -156,7 +159,7 @@ int inputCheck(int *nR,int *nC,int *pR,int *pC,int *gR,int *gC, int argc, char* 
     *gR = atoi(argv[5]) +1;
     *gC = atoi(argv[6]) +1;
 
-    if(*nR < 2 || *nC < 2 || *pR < 1 || *pC < 1 || *gR < 1 || *gC < 1)
+    if(*nR < 2 || *nC < 2 || *pR < 1 || *pC < 1 || *gR < 1 || *gC < 1) /*numbers are higher than 0 because of the addition done above*/
     {
         printf("Cannot enter negative numbers!\n");
         check = 0;
