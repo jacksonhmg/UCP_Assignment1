@@ -145,3 +145,43 @@ int loseCond(int pR, int pC, int gR, int gC, int nR, int nC,char** map, int** Xs
     }
     return check;
 }
+
+int inputCheck(int *nR,int *nC,int *pR,int *pC,int *gR,int *gC, int argc, char* argv[])
+{
+    int check;
+    check = 1;
+    if(argc < 7)
+    {
+        printf("Please run in the format of: './prog <row-size> <col-size> <player-row> <player-col> <goal-row> <goal-col>");
+        check = 0;
+    }
+    *nR = atoi(argv[1]) +2;
+    *nC = atoi(argv[2]) +2;
+    *pR = atoi(argv[3]) +1;
+    *pC = atoi(argv[4]) +1;
+    *gR = atoi(argv[5]) +1;
+    *gC = atoi(argv[6]) +1;
+
+    if(*nR < 2 || *nC < 2 || *pR < 1 || *pC < 1 || *gR < 1 || *gC < 1)
+    {
+        printf("Cannot enter negative numbers!\n");
+        check = 0;
+    }
+
+    if(*nR < 7 || *nC < 7) /*7 because the inside can't be smaller than 5 and 7 is the number of whole array including border*/
+    {
+        printf("Map size too small!\n");
+        check = 0;
+    }
+    if(*pR > *nR - 2 || *pC > *nC - 2)
+    {
+        printf("Player position placed outside of map area!\n");
+        check = 0;
+    }
+    if(*gR > *nR - 2 || *gC > *nC - 2)
+    {
+        printf("Goal position placed outside of map area!\n");
+        check = 0;
+    }
+    return check;
+}

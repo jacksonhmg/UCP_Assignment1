@@ -5,5 +5,6 @@ int validatePW(int nR, int nC, int pR, int pC, char input, int** Xs);
 int validatePX(int** Xs, int nR, int nC, int pR, int pC, char input);
 int winCond(int pR, int pC, int gR, int gC);
 int loseCond(int pR, int pC, int gR, int gC, int nR, int nC, char** map, int** Xs);
+int inputCheck(int *nR,int *nC,int *pR,int *pC,int *gR,int *gC, int argc, char* argv[]);
 
 #endif

@@ -13,45 +13,19 @@ int main(int argc, char* argv[])
 {
     char** map;
     
-    int nR,nC,pR,pC,gR,gC,i, valid;
+    int nR,nC,pR,pC,gR,gC,i,valid,check;
     int** Xs;
-    if(argc < 7)
-    {
-        printf("Please run in the format of: './prog <row-size> <col-size> <player-row> <player-col> <goal-row> <goal-col>");
-        return 0;
-    }
-    nR = atoi(argv[1]) +2;
-    nC = atoi(argv[2]) +2;
-    pR = atoi(argv[3]) +1;
-    pC = atoi(argv[4]) +1;
-    gR = atoi(argv[5]) +1;
-    gC = atoi(argv[6]) +1;
-
-    if(nR < 2 || nC < 2 || pR < 1 || pC < 1 || gR < 1 || gC < 1)
-    {
-        printf("Cannot enter negative numbers!\n");
-        return 0;
-    }
-
-    if(nR <= 7 || nC <= 7) /*7 because the inside can't be smaller than 5 and 7 is the number of whole array including border*/
-    {
-        printf("Map size too small!\n");
-        return 0;
-    }
-    if(pR > nR - 2 || pC > nC - 2)
-    {
-        printf("Player position placed outside of map area!\n");
-        return 0;
-    }
-    if(gR > nR - 2 || gC > nC - 2)
-    {
-        printf("Goal position placed outside of map area!\n");
-        return 0;
-    }
     
     
+    check = inputCheck(&nR,&nC,&pR,&pC,&gR,&gC,argc,argv);
+    if(!check)
+    {
+        return 0;
+    }
 
-    map = (char**)calloc(nR,sizeof(char*));
+    setupMap2(&map,nR,nC,pR,pC,gR,gC);
+
+    /*map = (char**)calloc(nR,sizeof(char*));
     for(i=0;i<nR;i++)
     {
         map[i] = (char*)calloc(nC, sizeof(char));
@@ -109,7 +83,7 @@ int main(int argc, char* argv[])
     {
         free(Xs[i]);
     }
-    free(Xs);
+    free(Xs);*/
     return 0;
     
 }

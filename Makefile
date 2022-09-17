@@ -14,7 +14,7 @@ $(EXEC) : $(OBJ)
 main.o : main.c setup.h macros.h gameloop.h terminal.h random.h checkers.h
 	$(CC) $(CFLAGS) -c main.c
 
-setup.o : setup.c setup.h macros.h
+setup.o : setup.c setup.h macros.h gameloop.h
 	$(CC) $(CFLAGS) -c setup.c
 
 gameloop.o : gameloop.c gameloop.h checkers.h random.h
