@@ -95,7 +95,7 @@ void xUpdate(char** map, int nR, int nC)
     xR = randoms(1,nR-2); /*keep within box size*/
     xC = randoms(1,nC-2);
 
-    while(map[xR][xC] != ' ') /*while the random spot is not empty*/
+    while(map[xR][xC] != ' ') /*while the random spot is not empty, retry*/
     {
         xR = randoms(1,nR-2);
         xC = randoms(1,nC-2);

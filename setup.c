@@ -57,15 +57,13 @@ int setupGame(int argc, char* argv[])
     int nR,nC,pR,pC,gR,gC,check;
 
     check = inputCheck(&nR,&nC,&pR,&pC,&gR,&gC,argc,argv);
-    if(!check)
+    if(check)
     {
-        return 0; /*exit program before continuing*/
+        setupMap(&map,nR,nC,pR,pC,gR,gC);
+
+        printMap(map,nR,nC);
+        
+        gameloop(map, nR, nC, pR, pC, gR, gC);
     }
-
-    setupMap(&map,nR,nC,pR,pC,gR,gC);
-
-    printMap(map,nR,nC);
-    
-    gameloop(map, nR, nC, pR, pC, gR, gC);
     return 0;
 }
